@@ -8,7 +8,7 @@ const pinBtn = document.getElementById("pin-btn");
 const pinError = document.getElementById("pin-error");
 const candado = document.getElementById("candado");
 
-const PIN_CORRECTO = "2236"; 
+const PIN_CORRECTO = "2112"; 
 
 let sobreDesbloqueado = false;
 
