@@ -1,0 +1,387 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primario: #fff;
+    --fondo: #bebebe; 
+    --fondo-sobre: #ffe3ed; 
+    --solapa-sobre: #ffccd5; 
+    --cuerpo-sobre: #ffc1d1; 
+    --sombra: rgba(0, 0, 0, 0.2);
+    --texto: #003049; 
+    --corazon: #ff477e; 
+}
+
+body {
+    background: var(--fondo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+h1 {
+    font-family: "Marck Script", serif; 
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 50px;
+    color: #444;
+}
+p{
+    font-size: 15px;
+}
+
+.contenedor {
+    width: 400px;
+}
+
+.envoltura-sobre {
+    position: relative;
+    background-color: var(--fondo-sobre);
+    box-shadow: 0 0 40px var(--sombra);
+    border-radius: 15px;
+}
+
+.sobre {
+    position: relative;
+    width: 400px;
+    height: 300px;
+}
+
+.sobre::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    border-top: 180px solid var(--solapa-sobre);
+    border-right: 200px solid transparent;
+    border-left: 200px solid transparent;
+    transform-origin: top;
+    transition: all 0.5s ease-in-out 0.7s;
+    border-radius: 10px;
+}
+
+.solapa-derecha {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(100% 0, 0 100%, 100% 100%);
+    background-color: var(--cuerpo-sobre);
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.solapa-izquierda {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+    background-color: var(--cuerpo-sobre);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.carta {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 88%;
+    margin: 0 auto;
+
+    background: #fffef8; 
+    border-radius: 12px;
+    padding: 15px;
+
+    /* textura papel */
+    background-image: 
+        
+        linear-gradient(#fffef8, #fffdf3);
+    background-size: cover;
+    background-blend-mode: multiply;
+
+    box-shadow:
+        0 4px 10px rgba(0,0,0,0.15),
+        inset 0 0 8px rgba(0,0,0,0.2);
+
+    overflow: hidden;
+    transition: transform .5s ease-in-out;
+}
+
+/* --- CONTENIDO INTERNO CON SCROLL --- */
+.contenido {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    padding-right: 12px;
+    padding: 20px;
+
+    /* TIPOGRAFÍA estilo carta */
+    font-family: "Marck Script", cursive;
+    font-size: 17px;
+    color: #3b2f2f;
+
+    line-height: 1.45;
+
+    /* bordes decorativos tipo carta */
+    border-left: 3px solid rgba(80,60,60,0.25);
+    border-right: 3px solid rgba(80,60,60,0.25);
+
+    background: rgba(255,255,240,0.45);
+}
+
+/* scroll más fino */
+.contenido::-webkit-scrollbar {
+    width: 6px;
+}
+
+.contenido::-webkit-scrollbar-thumb {
+    background: #d8c2a2;
+    border-radius: 10px;
+}
+
+.contenido::-webkit-scrollbar-thumb:hover {
+    background: #c4a98e;
+}
+
+
+.corazon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    background-color: var(--corazon);
+    transform: translate(-50%,0) rotate(45deg);
+    transition: transform 0.5s ease-in-out 1s;
+    z-index: 999;
+    cursor: pointer;
+}
+
+.corazon::before,
+.corazon::after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: var(--corazon);
+    border-radius: 100%;
+
+}
+
+.corazon:before {
+    top: -15px;
+}
+
+.corazon:after {
+    right: 15px;
+}
+
+/*Agregar clases dinamicos*/
+.abierto .sobre::before {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.abierto .corazon {
+    transform: rotate(90deg);
+    transition-delay: 0.4s;
+}
+
+.carta.mostrar-carta {
+    transform: translateY(-290px);
+    transition: transform .5s ease-in-out;
+}
+
+.carta.cerrando-carta {
+    transform: translateY(-290px);
+    transition: transform .5s ease-in-out;
+}
+
+.carta.abierta {
+    z-index: 10000;
+}
+
+.envoltura-sobre.desactivar-sobre .sobre::before {
+    pointer-events: none;
+}
+
+/*Scroll personalizado*/
+
+/*
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--cuerpo-sobre);
+    border-radius: 4px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--corazon);
+}
+*/
+
+/*Vista celular*/
+
+@media screen and (max-width:400px) {
+    .contenedor {
+        width: 300px;
+    }
+
+    .sobre {
+        width: 300px;
+        height: 250px;
+    }
+
+    .sobre::before {
+        border-top:150px solid var(--solapa-sobre) ;
+        border-right: 150px solid transparent;
+        border-left: 150px solid transparent;
+    }
+
+}
+
+#popup-pin {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20000;
+}
+
+.popup-oculto {
+    display: none !important;
+}
+
+.popup-contenido {
+    background: white;
+    padding: 25px;
+    width: 250px;
+    text-align: center;
+    border-radius: 12px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 0 10px black;
+}
+
+#pin-input {
+    width: 120px;
+    padding: 10px;
+    font-size: 22px;
+    letter-spacing: 8px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#pin-btn {
+    margin-top: 15px;
+    background: var(--corazon);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#pin-error {
+    margin-top: 8px;
+    color: red;
+    height: 20px;
+}
+
+/* --- CANDADO SOBRE EL CORAZÓN --- */
+/* --- CANDADO MEJORADO Y ALINEADO --- */
+.candado {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    background: #ff8fa3;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.25) inset;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+    }
+    .candado::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26px;
+    height: 20px;
+    border: 4px solid #ff8fa3;
+    border-bottom: none;
+    border-radius: 50px 50px 0 0;
+    background: transparent;
+    }
+    .candado::after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7px;
+    height: 14px;
+    background: #333;
+    border-radius: 3px;
+    }
+
+
+
+
+/* ---------- PISTAS SOBRE EL SOBRE ----------- */
+
+.pistas {
+    position: absolute;
+    top: 35%; 
+    left: 50%;
+    width: 80%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;  /* 🔥 NO bloquean clics */
+    z-index: 50;
+}
+
+.pista {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    opacity: 0.95;
+    transition: transform .3s ease;
+}
+
+/* Animación suave al pasar el mouse */
+.pista:hover {
+    transform: scale(1.07);
+}
+
